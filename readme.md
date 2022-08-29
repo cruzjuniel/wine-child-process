@@ -57,7 +57,7 @@ For more information, please refer to child_process.execSync [documentation](htt
 | Parameter  | Type                          | Description                                        |
 |:---------- |:-----------------------------:|:-------------------------------------------------- |
 | command    | string                        | The command to run, with space-separated arguments |
-| options    | child_process.ExecOptions     | Additional options for the exec function           |
+| options    | child_process.ExecSyncOptions | Additional options for the exec function           |
 
 
 ### `execFileSync`
@@ -68,11 +68,11 @@ Returns the output Buffer or string if successful or `null` if using Linux or ma
 
 For more information, please refer to child_process.execFileSync [documentation](https://nodejs.org/api/child_process.html#child_processexecfilesyncfile-args-options).
 
-| Parameter  | Type                          | Description                                        |
-|:---------- |:-----------------------------:|:-------------------------------------------------- |
-| file       | string                        | The name or path of the executable file to run     |
-| args       | readonly string[]             | List of string arguments                           |
-| options    | child_process.ExecFileOptions | Additional options for the execFile function       |
+| Parameter  | Type                              | Description                                        |
+|:---------- |:---------------------------------:|:-------------------------------------------------- |
+| file       | string                            | The name or path of the executable file to run     |
+| args       | readonly string[]                 | List of string arguments                           |
+| options    | child_process.ExecFileSyncOptions | Additional options for the execFile function       |
 
 
 ## Utility Functions
