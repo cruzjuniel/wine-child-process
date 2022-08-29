@@ -1,9 +1,17 @@
 {
   "name": "wine-child-process",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A child process implementation that automatically utilizes wine when running Windows applications in Linux and macOS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cruzjuniel/wine-child-process.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cruzjuniel/wine-child-process/issues",
+    "email": "cruz.juniel@gmail.com"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
