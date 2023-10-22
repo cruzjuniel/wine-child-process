@@ -1,7 +1,8 @@
 import path from 'path';
 import child_process from "child_process";
+import os from "os";
 
-const platform = require("os").platform();
+const platform = os.platform();
 const useWine = platform != "win32";
 
 /**
@@ -41,6 +42,67 @@ const isWindowsOrWine: boolean = (() => {
 export function checkWindowsOrWine() {
     return isWindowsOrWine;
 }
+
+
+/**
+ * Calls spawn function from child_process module. Wine is automatically used when using Linux or macOS.
+ * 
+ * Returns the `child_process.ChildProcess` if successful or `null` if using Linux or macOS with no Wine installed
+ * 
+ * For more information, please refer to child_process.spawn [documentation](https://nodejs.org/api/child_process.html#child_processspawncommand-args-options).
+ * 
+ * @param command The command to run.
+ * @param args List of string arguments
+ * @param options Additional options for the spawn function.
+ * 
+ * @returns child_process.ChildProcess | null
+ */
+export function spawn(command: string, args: string[], options:child_process.SpawnOptions)
+    : child_process.ChildProcess | null {
+
+    if (!isWindowsOrWine) return null;
+
+    if (!useWine) return child_process.spawn(command, args, options);
+
+    let cmd = command;
+
+    if (typeof options.cwd === 'string') {
+        cmd = path.join(options.cwd, cmd);
+    }
+
+    return child_process.spawn(`wine`, [cmd, ...args], options);
+}
+
+
+/**
+ * Calls spawnSync function from child_process module. Wine is automatically used when using Linux or macOS.
+ * 
+ * Returns the `child_process.SpawnSyncReturns<Buffer>` if successful or `null` if using Linux or macOS with no Wine installed
+ * 
+ * For more information, please refer to child_process.spawnSync [documentation](https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options).
+ * 
+ * @param command The command to run.
+ * @param args List of string arguments
+ * @param options Additional options for the spawn function.
+ * 
+ * @returns child_process.ChildProcess | null
+ */
+export function spawnSync(command: string, args: string[], options:child_process.SpawnOptions)
+    : child_process.SpawnSyncReturns<Buffer> | null {
+
+    if (!isWindowsOrWine) return null;
+
+    if (!useWine) return child_process.spawnSync(command, args, options);
+
+    let cmd = command;
+
+    if (typeof options.cwd === 'string') {
+        cmd = path.join(options.cwd, cmd);
+    }
+
+    return child_process.spawnSync(`wine`, [cmd, ...args], options);
+}
+
 
 /**
  * Calls exec function from child_process module. Wine is automatically used when using Linux or macOS.
