@@ -70,7 +70,10 @@ export function spawn(command: string, args: string[], options:child_process.Spa
         cmd = path.join(options.cwd, cmd);
     }
 
-    return child_process.spawn(`wine`, [cmd, ...args], options);
+    return child_process.spawn(`wine`, [cmd, ...args], {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    });
 }
 
 
@@ -100,7 +103,10 @@ export function spawnSync(command: string, args: string[], options:child_process
         cmd = path.join(options.cwd, cmd);
     }
 
-    return child_process.spawnSync(`wine`, [cmd, ...args], options);
+    return child_process.spawnSync(`wine`, [cmd, ...args], {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    });
 }
 
 
@@ -130,7 +136,10 @@ export function exec(command: string, options: child_process.ExecOptions,
         cmd = path.join(options.cwd, cmd);
     }
 
-    return child_process.exec(`wine ${cmd}`, options, callback);
+    return child_process.exec(`wine ${cmd}`, {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    }, callback);
 
 }
 
@@ -161,7 +170,10 @@ export function execFile(file: string, args: readonly string[], options: child_p
         fl = path.join(options.cwd, fl);
     }
 
-    return child_process.execFile("wine", [fl, ...args], options, callback);
+    return child_process.execFile("wine", [fl, ...args], {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    }, callback);
 
 }
 
@@ -188,7 +200,10 @@ export function execSync(command: string, options: child_process.ExecSyncOptions
         cmd = path.join(options.cwd, cmd);
     }
 
-    return child_process.execSync(`wine ${cmd}`, options);
+    return child_process.execSync(`wine ${cmd}`, {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    });
 
 }
 
@@ -216,6 +231,9 @@ export function execFileSync(file: string, args: readonly string[], options: chi
         fl = path.join(options.cwd, fl);
     }
 
-    return child_process.execFileSync("wine", [fl, ...args], options);
+    return child_process.execFileSync("wine", [fl, ...args], {
+        ...options,
+        env: { ...process.env, WINEDEBUG: 'fixme-all' },
+    });
 
 }
